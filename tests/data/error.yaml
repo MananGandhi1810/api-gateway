@@ -1,0 +1,8 @@
+  vservices:
+    auth:
+        endpoint: http://localhost:3000
+      fd   route: /auth
+cds
+    cart:
+        endpoint: http://localhost:4000
+   cd     route: /cart
