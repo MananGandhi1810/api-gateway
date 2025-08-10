@@ -1,7 +1,6 @@
 services:
     - name: auth
       endpoint: http://localhost:3000
-      route: /auth
 
     - name: cart
       endpoint: http://localhost:4000
