@@ -6,6 +6,7 @@ import { parseArgs } from 'util';
 import path from 'path';
 
 const configSchema = z.object({
+	port: z.number().optional(),
 	services: z.array(z.object({
 		route: z.string(),
 		endpoint: z.url()
