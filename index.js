@@ -1,7 +1,6 @@
 import { parseArgs } from 'util';
 import { readConfig } from './utils/config.js';
 import path from 'path';
-import { constrainedMemory } from 'process';
 
 const args = process.argv;
 const options = {
