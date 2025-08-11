@@ -1,40 +1,33 @@
 import fs from 'fs'
 import { exit } from 'process'
 import YAML from 'yaml'
-import { z } from 'zod'
 import { parseArgs } from 'util';
 import path from 'path';
+import { configSchema } from './schema';
 
-const configSchema = z.object({
-	port: z.number().optional(),
-	services: z.array(z.object({
-		route: z.string(),
-		endpoint: z.url()
-	}))
-})
-
-export const getConfigPath = () => {
-	const args = process.argv;
-	const options = {
-		conf: {
-			type: 'string',
-			short: 'c'
-		}
-	};
-	const {
-		values: argValues,
-	} = parseArgs({ args, options, allowPositionals: true });
+export const getConfigPath = (filePath = null) => {
+	if (!filePath) {
+		const args = process.argv;
+		const options = {
+			conf: {
+				type: 'string',
+				short: 'c'
+			}
+		};
+		const { values: argValues } = parseArgs({ args, options, allowPositionals: true });
+		filePath = argValues.conf
+	}
 
 	var configFilePath;
 
-	if (argValues.conf.startsWith(".")) {
-		configFilePath = path.join(process.cwd(), argValues.conf.slice(2, argValues.conf.length));
+	if (filePath.startsWith(".")) {
+		configFilePath = path.join(process.cwd(), filePath.slice(2, argValues.conf.length));
 	}
-	else if (argValues.conf.startsWith("/")) {
-		configFilePath = argValues.conf;
+	else if (filePath.startsWith("/")) {
+		configFilePath = filePath;
 	}
 	else {
-		configFilePath = path.join(process.cwd(), argValues.conf)
+		configFilePath = path.join(process.cwd(), filePath)
 	}
 
 	return configFilePath;
@@ -42,13 +35,11 @@ export const getConfigPath = () => {
 
 export const readConfig = (filePath) => {
 	if (filePath === undefined || filePath === null) {
-		console.error("Please provide a config file")
-		exit(1)
+		throw new Error("Please provide a config file")
 	}
 
 	if (!fs.existsSync(filePath)) {
-		console.error("File not found")
-		exit(1)
+		throw new Error("File not found")
 	}
 
 
@@ -58,8 +49,7 @@ export const readConfig = (filePath) => {
 	try {
 		config = configSchema.parse(YAML.parse(rawConf))
 	} catch (e) {
-		console.error("Error in config file: ", e)
-		exit(1)
+		throw new Error("Could not parse config file")
 	}
 
 	return config
