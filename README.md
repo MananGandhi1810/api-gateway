@@ -29,26 +29,26 @@ Create a YAML configuration file to define your services. Here's an example:
 port: 1810
 
 services:
-  - name: auth
-    endpoint: http://localhost:3000
-    route: /auth
+    - name: auth
+      endpoint: http://localhost:3000
+      route: /auth
 
-  - name: cart
-    endpoint: http://localhost:4000
-    route: /cart
+    - name: cart
+      endpoint: http://localhost:4000
+      route: /cart
 
-  - name: orders
-    endpoint: http://localhost:5000
-    route: /orders
+    - name: orders
+      endpoint: http://localhost:5000
+      route: /orders
 ```
 
 ### Configuration Schema
 
 - `port` (optional): The port on which the gateway will run (defaults to 1810 or PORT environment variable)
 - `services`: Array of service configurations
-  - `name`: Human-readable name for the service
-  - `endpoint`: The full URL of the target microservice
-  - `route`: The route prefix that will be proxied to this service
+    - `name`: Human-readable name for the service
+    - `endpoint`: The full URL of the target microservice
+    - `route`: The route prefix that will be proxied to this service
 
 ## Usage
 
@@ -104,6 +104,7 @@ npm test
 ```
 
 Tests include:
+
 - Valid configuration parsing
 - Invalid YAML handling
 - Schema validation error handling
@@ -122,6 +123,7 @@ Tests include:
 ## Error Handling
 
 The gateway includes robust error handling for:
+
 - Missing configuration files
 - Invalid YAML syntax
 - Schema validation failures
