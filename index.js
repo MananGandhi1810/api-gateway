@@ -17,10 +17,12 @@ app.use(
 );
 
 config.services.forEach((service) => {
-    app.all(
+    app.use(
         service.route,
         proxy(service.endpoint, {
-            proxyReqPathResolver: (req) => req.path.slice(service.route.length),
+            proxyReqPathResolver: (req) => {
+                return req.originalUrl.slice(service.route.length,)
+            }
         }),
     );
 });

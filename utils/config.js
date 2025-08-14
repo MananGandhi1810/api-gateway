@@ -2,7 +2,7 @@ import fs from "fs";
 import YAML from "yaml";
 import { parseArgs } from "util";
 import path from "path";
-import { configSchema } from "./schema.js";
+import { configSchema } from "../schema/config.js";
 
 export const getConfigPath = (filePath = null) => {
     if (!filePath) {
@@ -18,6 +18,9 @@ export const getConfigPath = (filePath = null) => {
             options,
             allowPositionals: true,
         });
+        if (!argValues.conf) {
+            throw new Error("No configuration file provided")
+        }
         filePath = argValues.conf;
     }
 
