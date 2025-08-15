@@ -7,6 +7,7 @@ export const configSchema = z.object({
         z.object({
             route: z.string(),
             endpoint: z.url(),
+            name: z.string(),
         }),
     ),
 });
