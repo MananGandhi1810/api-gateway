@@ -13,6 +13,9 @@ export const generateMetrics = (req, res, next) => {
         const metrics = {
             responseTime,
             service,
+            originalPath: req.originalUrl,
+            path: req.path,
+            userAgent: req.get("User-Agent")
         }
         console.log(metrics)
     })
