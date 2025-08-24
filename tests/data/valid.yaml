@@ -2,7 +2,7 @@ port: 1810
 
 services:
     - name: auth
-      endpoint: http://localhost:3000
+      endpoint: http://localhost:3005
       route: /auth
 
     - name: cart
